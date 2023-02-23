@@ -142,20 +142,18 @@ cd $OUTDIR
 if [[ "$SKIP_VSCODE" == 1 ]]; then
     echo "Won't include VSCODE"
 else
-    if [ -f vscode.deb ]; then
-        echo "Skipping vscode as vscode.deb exists"
-    else
-        echo "Installing VSCODE"
+    echo "Installing VSCODE"
 
-        sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-        sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+    dnf check-update
+    sudo dnf install code
 
-        # Get extensions
-        code --install-extension marus25.cortex-debug
-        code --install-extension twxs.cmake
-        code --install-extension ms-vscode.cmake-tools
-        code --install-extension ms-vscode.cpptools
-        code --install-extension ms-vscode.cpptools-extension-pack
-        code --install-extension ms-vscode.cpptools-themes
-    fi
+    # Get extensions
+    code --install-extension marus25.cortex-debug
+    code --install-extension twxs.cmake
+    code --install-extension ms-vscode.cmake-tools
+    code --install-extension ms-vscode.cpptools
+    code --install-extension ms-vscode.cpptools-extension-pack
+    code --install-extension ms-vscode.cpptools-themes
 fi
